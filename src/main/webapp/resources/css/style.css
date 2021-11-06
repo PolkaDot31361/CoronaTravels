@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+body{
+    margin : 50px auto;
+}
+.container{
+    border-radius: 1rem;
+    padding: 10px 15px;
+    width: 450px;
+    min-height : 720px;
+    background-image: linear-gradient(to right, #a2c5fc, #c0e8fc);
+    display: flex;
+    flex-direction: column;
+   	box-shadow: 4px 5px 12px 7px hsla(0, 0%, 0%, 0.27);
+}
+.container a{
+	text-decoration: none;	
+}
+.container .logo{
+	color : #103e78;
+	font-weight: 600;
+	padding-top: 10px;
+}
+.container input{
+	margin: 10px;
+}
+.container .in-ctrl{
+    background : #deeefd;
+	border: none;
+	border-radius: 1rem;
+	padding: 5px 15px;
+	font-weight: 600;
+	color : #9b9898;
+}
+.container .in-ctrl:focus{
+	outline: none;
+}
+.container .btn{
+	width : 40%;
+    box-shadow: 4px 3px 5px 1px hsla(0, 0%, 0%, 0.35);
+    padding:5px 15px;
+	border-radius: 1rem;
+    border: none;
+}
+.container .btn1{
+    background-color: #63abff;
+}
+.container .btn2{
+    background-color: #6490e4;
+}
+.income {
+    color: green;
+    font-weight: 600;
+}
+.expense {
+    color: red;
+    font-weight: 600;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+}
