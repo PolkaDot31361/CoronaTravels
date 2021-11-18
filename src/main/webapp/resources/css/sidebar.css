@@ -83,6 +83,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
 .sidebar .nav_links li.showMenu i.arrow{
     transform: rotate(-180deg);
 }
@@ -93,6 +94,12 @@
     text-decoration: none;
     display: flex;
     align-items: center;
+}
+.sidebar .nav_links li a input{
+	height : 50px;
+}
+.sidebar.close .nav_links li a input{
+	display : none;
 }
 .sidebar .nav_links li a .link_name{
     font-size: 18px;
