@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="scit.classa.three.vo.AccountVO" alias="account"/>
+		<typeAlias type="scit.classa.three.vo.ReviewVO" alias="review"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mapper/accountMapper.xml" />
+		<mapper resource="mapper/reviewMapper.xml" />
+	</mappers>
+</configuration>

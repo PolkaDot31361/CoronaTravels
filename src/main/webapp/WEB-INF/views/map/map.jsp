@@ -12,38 +12,38 @@
 	<div class="sidebar">
         <div class="logo_details">
             <i class='bx bx-menu' ></i>
-            <span class="logo_name">Polkadot31361</span>
+            <span class="logo_name">TRAVELS</span>
         </div>
         <ul class="nav_links">
             <li>
-                <a href="aboutMe.html">
+                <a href="#">
                     <i class='bx bx-user' ></i>
-                    <span class="link_name">menu 0</span>
+                	<input type="text" placeholder="Search" id="searchText">
                 </a>
                 <ul class="sub_menu blank">
-                    <li><a class="link_name" href="#">About Me</a></li>
+                    <li><a class="link_name" href="#">Search</a></li>
                 </ul>
             </li>
             <li>
-                <a href="aboutMe.html">
+                <a href="#">
                     <i class='bx bx-coffee' ></i>
-                    <span class="link_name">Menu 1</span>
+                    <span class="link_name">Info</span>
                 </a>
                 <ul class="sub_menu blank">
-                    <li><a class="link_name" href="#">About Me</a></li>
+                    <li><a class="link_name" href="#">Info</a></li>
                 </ul>
             </li>
             <li>
-                <a href="aboutMe.html">
+                <a href="#">
                     <i class='bx bxl-python' ></i>
-                    <span class="link_name">Menu 4</span>
+                    <span class="link_name">Reviews</span>
                 </a>
                 <ul class="sub_menu blank">
-                    <li><a class="link_name" href="#">About Me</a></li>
+                    <li><a class="link_name" href="#">Reviews</a></li>
                 </ul>
             </li>
             <li>
-                <a href="aboutMe.html">
+                <a href="#">
                     <i class='bx bx-coffee' ></i>
                     <span class="link_name">Menu 5</span>
                 </a>
@@ -70,12 +70,12 @@
                 </ul>
             </li>
             <li>
-                <a href="https://www.github.com/PolkaDot31361" target="_blank">
+                <a href="https://github.com/PolkaDot31361/CoronaTravels" target="_blank">
                     <i class='bx bxl-github' ></i>
                     <span class="link_name" href="#">Github</span>
                 </a>
                 <ul class="sub_menu blank">
-                    <li><a class="link_name" href="#">Github</a></li>
+                    <li><a class="link_name" href="https://github.com/PolkaDot31361/CoronaTravels">Github</a></li>
                 </ul>
             </li>
             <li> 
@@ -98,12 +98,27 @@
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = { 
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        center: new kakao.maps.LatLng(37.510903, 127.060172), // 지도의 중심좌표
 	        level: 3 // 지도의 확대 레벨
 	    };
 	
 	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	if (navigator.geolocation){
+		
+		navigator.geolocation.getCurrentPosition(function(position){
+			
+			var lat = position.coords.latitude;
+			var lon = position.coords.longitude;
+			
+			var locPosition = new kakao.maps.LatLng(lat, lon);
+			map.setCenter(locPosition);
+		});
+	}else{
+		var locPostion = new kakao.map.LatLng(33.450701, 126.570667);
+		map.setCenter(locPosition);
+	}
 	</script>
 	<script type="text/javascript" src="/resources/js/sidebar.js"></script>
 </body>
