@@ -138,7 +138,7 @@
 	</div>
 	</c:otherwise>
 	</c:choose>
-<a href = "map/toMap">지도 바로가기</a>
+<a href="map/toMap">지도 바로가기</a>
 <br>
 <a href="map/toMain">메인페이지</a>
 </body>
