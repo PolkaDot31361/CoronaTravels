@@ -11,4 +11,14 @@ public class MapController {
 	public String toMap() {
 		return "map/map";
 	}
+	
+	@RequestMapping(value = "map/toMain", method = RequestMethod.GET)
+	public String toMain() {
+		return "map/main";
+	}
+	
+	@RequestMapping(value = "toMain", method = RequestMethod.GET)
+	public String Main() {
+		return "main";
+	}
 }
