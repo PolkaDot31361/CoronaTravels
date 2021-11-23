@@ -83,22 +83,17 @@
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
-.sidebar .nav_links li.showMenu i.arrow{
-    transform: rotate(-180deg);
-}
-.sidebar.close .nav_links i.arrow{
-    display: none;
-}
 .sidebar .nav_links li a{
     text-decoration: none;
     display: flex;
     align-items: center;
 }
-.sidebar .nav_links li a input{
-	height : 50px;
+.sidebar .nav_links li a input #searchText{
+	width : 35px;
+	border-radius : 2rem;
+	padding : 5px;
 }
-.sidebar.close .nav_links li a input{
+.sidebar.close .nav_links li a input #searchText{
 	display : none;
 }
 .sidebar .nav_links li a .link_name{
