@@ -77,6 +77,7 @@
 	</script>
 	</head>
 	<body>
+	
 		<!-- 상단 메뉴바 -->
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 			<span style="font-size:30px;cursor:pointer; color:white; margin-right: 16px;" onclick="openNav()">&#9776;</span>
@@ -98,6 +99,7 @@
 		    </ul>
 		  </div>
 		</nav>
+		
 		<!-- 측면 메뉴바 -->
 		<div id="mySidenav" class="sidenav">
 	  		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -105,6 +107,7 @@
 	  			<i class='bx bx-search' id="searchBtn"></i>
 	      		<input class="form-control" type="text" placeholder="Search" id="searchText">
 	  		</form>
+	  		<!-- 
 	  		<ul>
 	  			<li>
 	  				list test
@@ -113,14 +116,20 @@
 	  				does not Show
 	  			</li>
 	  		</ul>
+	  		 -->
 		  <!-- 
 		  <a href="#">About</a>
 		  <a href="#">Contact</a>
 		   -->
 		</div>
 		
+		<!-- 지도 표시되는 section -->
 		<section class="map_section" id='map'></section>
+		
+		<!-- kakao map api -->
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2090152ede9a9b2a0147836b9f6e01eb&libraries=services"></script>
+		
+		<!-- 지도 생성 관련 javascript -->
 		<script>
 			var infowindow = new kakao.maps.InfoWindow({zIndex : 1});
 			
