@@ -1,10 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html>
 <head>
 	<title>Login</title>
+	
+	<!-- google OAuth2.0 client ID -->
+	<meta name ="google-signin-client_id" content="419270486004-1tcf5tfk0p2sps8hf7ugatckrqeghtnc.apps.googleusercontent.com">
+	
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./login.css">
     <style type="text/css">
@@ -106,40 +110,84 @@
 </head>
 <body>
 	<c:choose>
-	<c:when test="${empty sessionScope.userID }">
-	<form action="/account/login" method="post" onsubmit="return formCheck();">
+	<c:when test="${empty sessionScope.user_name }">
 	    <div class="wrap">
 	        <div class="login">
 	            <h2>Log-in</h2>
-	            <div class="login_id">
-	                <input type="text" name="" id="" placeholder="Username">
-	            </div>
-	            <div class="login_pw">
-	                <input type="password" name="" id="" placeholder="Password">
-	            </div>
-	            <br>
+	            <form action="/account/login" method="post" onsubmit="return formCheck();">
+		            <div class="login_id">
+		                <input type="text" name="" id="" placeholder="Username">
+		            </div>
+		            <div class="login_pw">
+		                <input type="password" name="" id="" placeholder="Password">
+		            </div>
+		            <div class="submit">
+		                <input type="submit" value="Sign in">
+		            </div>
+	            </form>
+	            
 	            <div class="forgot_pw" style="color: gray;">
-	                Forgot your <a href="" style="color: gray;" class="forgot_pw_"><I>Password</I></a>?
-	            </div>
-	            <div class="submit">
-	                <input type="submit" value="Sign in">
-	            </div>
-	        </div>
+		        	Forgot your <a href="/account/resetpasswordPage" style="color: gray;" class="forgot_pw_"><I>Password</I></a>?
+		        </div>
+
+	            
+	            <!-- 카카오 로그인 -->
+	            <div>
+			    	<!-- 카카오 로그인 창으로 이동 -->
+					<a id="reauthenticate-popup-btn" href="javascript:loginFormWithKakao();">
+					  <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="222"/>
+					</a>
+					<p id="reauthenticate-popup-result"></p>
+			    </div>
+			    <!-- end 카카오 로그인 -->
+	            
+	            <!-- 네이버 로그인 창으로 이동 -->
+				<div id="naver_id_login">
+					<a href="${url}"> <img width="223"
+						src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png" />
+					</a>
+				</div>
+				<!-- end 네이버 로그인 -->
+
+				<!-- 구글 로그인 창으로 이동 -->
+				<div id="googleBtn" class="g-signin2" data-onsuccess="onSignIn"></div>
+				<!-- end 구글 로그인 -->
+			</div>
+	        <!-- end login div -->
 	    </div>
-    </form>
+    	<!-- end wrap div -->
+
 	</c:when>
 	<c:otherwise>
 	<div class="container">
+		<div>
+			<h1>안녕하세요!! </h1><p>${sessionScope.user_name }</p>
+		 	<h4>이메일 : </h4><p>${sessionScope.user_email }</p>
+		</div>
+		
 		<div class="logo">거리두기 여행</div>
 		<div class="buttons">
        		<input type="submit" value="Book Keeper" class="btn btn1 btn-primary" onclick="">
-       		<input type="button" value="Log Out" class="btn btn2 btn-primary" onclick="">
+       		<input type="button" value="Log Out" class="btn btn2 btn-primary" onclick="logout(${sessionScope.loginBy });">
      	</div>
 	</div>
 	</c:otherwise>
 	</c:choose>
-<a href="map/toMap">지도 바로가기</a>
-<br>
-<a href="map/toMain">메인페이지</a>
+	
+	<a href="map/toMap">지도 바로가기</a>
+	<br>
+	<a href="map/toMain">메인페이지</a>
+
+	<!-- SCRIPT -->
+	<!-- Jquery -->
+	<script src="/resources/js/jquery-3.4.1.js"></script>
+	
+	<!-- Kakao login API -->
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	
+	<!-- Google login API -->
+	<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+	
+	<script src="/resources/js/Oauth.js"></script>
 </body>
 </html>

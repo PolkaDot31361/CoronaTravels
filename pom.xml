@@ -144,12 +144,83 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
+		<!-- 제이슨 파싱 -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.7</version>
+		</dependency>
+		
+		<!-- naver -->
+		<dependency>
+			<groupId>com.github.scribejava</groupId>
+			<artifactId>scribejava-core</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+		
+		<!-- Google API Client Library -->
+		<dependency>
+     		<groupId>com.google.api-client</groupId>
+     		<artifactId>google-api-client</artifactId>
+     		<version>1.31.5</version>
+   		</dependency>
+		
 		<!-- JSON -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.8.6</version>
-		</dependency>         
+		</dependency>
+		
+		<!-- javax.mail/mail -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>4.3.6.RELEASE</version>
+        </dependency>
+	
+		<!-- Spring Security -->
+		
+		<!-- spring-security-core -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>4.2.3.RELEASE</version>
+		</dependency>
+				
+		<!-- spring-security-web -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>4.2.3.RELEASE</version>
+		</dependency>
+		
+		<!-- spring-security-config -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    <version>4.2.3.RELEASE</version>
+		</dependency>
+		
+		<!-- spring-security-taglibs -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		    <version>4.2.3.RELEASE</version>
+		</dependency>       
 	</dependencies>
     <build>
         <plugins>
