@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,11 +32,15 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import scit.classa.three.service.AccountService;
 import scit.classa.three.service.KakaoService;
+import scit.classa.three.vo.AccountVO;
 import scit.classa.three.vo.NaverLoginVO;
 
 
 @Controller
 public class MemberController {
+	
+	private final static org.slf4j.Logger LOG =  LoggerFactory.getLogger(MemberController.class);
+	
 	@Autowired
 	private HttpSession session;
 	
@@ -55,22 +60,38 @@ public class MemberController {
 	
 	final String HOME_URL = "http://localhost:8888";
 	
+//	íšŒì› ê°€ì…ì°½ ì´ë™
+	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
+	public String toJoinForm() {
+		System.out.println("ì‘ë™1");
+		return "joinForm";
+	}
+	
+//	íšŒì› ê°€ì…
+	@RequestMapping(value="/join", method = RequestMethod.POST)
+	public String createAccount(AccountVO account) {
+		System.out.println("working2");
+		LOG.info("granted AccountVO accout :{}" + account);
+		return accountService.createAccount(account);
+	}
+	
+	
 	/**
-	 * kakao ·Î±×ÀÎ
+	 * kakao ï¿½Î±ï¿½ï¿½ï¿½
 	 */
 	private final String KAKAO_AUTH_URL = "https://kauth.kakao.com";
 	private final String KAKAO_CLIENT_ID = "55180a659f0e1abee38d8a70d2860b55";
 	
 	/**
-	 * Google ·Î±×ÀÎ
+	 * Google ï¿½Î±ï¿½ï¿½ï¿½
 	 */
 	private final String GOOGLE_CLIENT_ID = "419270486004-1tcf5tfk0p2sps8hf7ugatckrqeghtnc.apps.googleusercontent.com";
 	
 		
 	/**
-	 * Ä«Ä«¿À ·Î±×ÀÎ url ¿äÃ»
+	 * Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ url ï¿½ï¿½Ã»
 	 * @param request
-	 * @return Ä«Ä«¿À ·Î±×ÀÎ url
+	 * @return Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ url
 	 * @throws Exception
 	 */
 	@ResponseBody
@@ -85,17 +106,17 @@ public class MemberController {
 	}
 	
 	/**
-	 * Ä«Ä«¿À ¿¬µ¿Á¤º¸ Á¶È¸
-	 * Ä«Ä«¿À ·Î±×ÀÎ¿¡¼­ »ç¿ëÇÒ OAuth Redirect URI
+	 * Ä«Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
+	 * Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ OAuth Redirect URI
 	 */
 	@GetMapping("/login/oauth_kakao")
 	private String oauthKakao(@RequestParam("code") String code) throws Exception{
 		String accessToken = kakaoService.getAccessToken(code);
 
-		// Ä«Ä«¿À À¯ÀúÁ¤º¸ °¡Á®¿À±â
+		// Ä«Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		HashMap<String, Object> userInfo = kakaoService.getUserInfo(accessToken);
 		
-		// ¼¼¼Ç¿¡ Ä«Ä«¿À À¯ÀúÁ¤º¸ ÀúÀå
+		// ï¿½ï¿½ï¿½Ç¿ï¿½ Ä«Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		session.setAttribute("user_name", userInfo.get("name"));
 		session.setAttribute("loginBy", LOGIN_KAKAO);
 		
@@ -104,7 +125,7 @@ public class MemberController {
 
 	
 	/**
-	 * ³×ÀÌ¹ö ·Î±×ÀÎ ¼º°ø½Ã callback È£Ãâ ¸Ş¼­µå
+	 * ï¿½ï¿½ï¿½Ì¹ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ callback È£ï¿½ï¿½ ï¿½Ş¼ï¿½ï¿½ï¿½
 	 * @param model
 	 * @param code
 	 * @param state
@@ -121,10 +142,10 @@ public class MemberController {
 		OAuth2AccessToken oauthToken;
 	    oauthToken = naverLoginVO.getAccessToken(session, code, state);
 	    
-	    //1. ·Î±×ÀÎ »ç¿ëÀÚ Á¤º¸¸¦ ÀĞ¾î¿Â´Ù.
-	    String apiResult = naverLoginVO.getUserProfile(oauthToken); //StringÇü½ÄÀÇ jsonµ¥ÀÌÅÍ
+	    //1. ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ğ¾ï¿½Â´ï¿½.
+	    String apiResult = naverLoginVO.getUserProfile(oauthToken); //Stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ jsonï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    
-	    //2. StringÇü½ÄÀÎ apiResult¸¦ jsonÇüÅÂ·Î ¹Ù²Ş
+	    //2. Stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ apiResultï¿½ï¿½ jsonï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ù²ï¿½
 	    JSONParser parser = new JSONParser();
 	    Object obj = null;
 	    try {
@@ -135,15 +156,15 @@ public class MemberController {
 	    }
 	    JSONObject jsonObject = (JSONObject) obj;
 	    
-	    //3. µ¥ÀÌÅÍ ÆÄ½Ì
-	    //Top·¹º§ ´Ü°è _response ÆÄ½Ì
+	    //3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä½ï¿½
+	    //Topï¿½ï¿½ï¿½ï¿½ ï¿½Ü°ï¿½ _response ï¿½Ä½ï¿½
 	    JSONObject response_obj = (JSONObject) jsonObject.get("response");
 	    
-	    // responseÀÇ nickname°ª ÆÄ½Ì
+	    // responseï¿½ï¿½ nicknameï¿½ï¿½ ï¿½Ä½ï¿½
 	    String user_name = (String)response_obj.get("nickname");
 	    String user_id = (String)response_obj.get("email");
 	    
-	    // ¼¼¼Ç¿¡ µ¥ÀÌÅÍ ÀúÀå
+	    // ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	    session.setAttribute("user_name", user_name);
 	    session.setAttribute("user_email", user_id);
 	    session.setAttribute("loginBy", LOGIN_NAVER);
@@ -188,7 +209,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * Ä«Ä«¿À °èÁ¤ ·Î±×¾Æ¿ô
+	 * Ä«Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î±×¾Æ¿ï¿½
 	 * @param request
 	 * @return
 	 * @throws Exception
@@ -204,7 +225,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * ·Î±×¾Æ¿ô
+	 * ï¿½Î±×¾Æ¿ï¿½
 	 */
 	@RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST })
 	private String logout(HttpServletRequest request) {
@@ -214,7 +235,7 @@ public class MemberController {
 	}
 	
 	/*
-	 * ºñ¹Ğ¹øÈ£ ÃÊ±âÈ­ ÆäÀÌÁö·Î ÀÌµ¿
+	 * ï¿½ï¿½Ğ¹ï¿½È£ ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 	 */
 	@GetMapping("/account/resetpasswordPage")
 	private String resetPasswordPage() {
@@ -222,7 +243,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * ºñ¹Ğ¹øÈ£ Ã£±â
+	 * ï¿½ï¿½Ğ¹ï¿½È£ Ã£ï¿½ï¿½
 	 * @param inputEmail
 	 * @return
 	 */

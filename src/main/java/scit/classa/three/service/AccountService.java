@@ -6,41 +6,59 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import scit.classa.three.dao.AccountDAO;
 import scit.classa.three.util.EmailServiceImpl;
+import scit.classa.three.vo.AccountVO;
 import scit.classa.three.vo.EmailDTO;
 
 @Service
 public class AccountService {
+	
+	@Autowired
+	private AccountDAO dao;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private EmailServiceImpl emailService;
 	
+	//íšŒì› ê°€ìž…
+		public String createAccount(AccountVO account) {
+			String path = "";
+			
+			if(dao.createAccount(account) > 0) {
+				path = "redirect:/";
+			}else {
+				path = "redirect:toJoinForm";
+			}
+			return path;
+			
+		}	
+	
 	/**
-	 * ºñ¹Ð¹øÈ£ ÃÊ±âÈ­
 	 * @param inputEmail
 	 * @return
 	 */
 	public String resetPassword(String inputEmail) {
-		// ÀÔ·ÂÇÑ ÀÌ¸ÞÀÏÀÌ DB¿¡ ÀÖ´ÂÁö È®ÀÎ
+		// ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 		
-		// ÀÖÀ» °æ¿ì ºñ¹Ð¹øÈ£ ÇÚ´ý »ý¼º
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ ï¿½Ú´ï¿½ ï¿½ï¿½ï¿½ï¿½
 		String randomPassword = generatePassword(10);
 		
-		// ºñ¹Ð¹øÈ£ ¾ÏÈ£È­
+		// ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½È£È­
 		String encodedRandomPassword = passwordEncoder.encode(randomPassword);
 		
-		// ¾ÏÈ£È­µÈ ºñ¹Ð¹øÈ£¸¦ DB¿¡ ÀúÀå(ºñ¹Ð¹øÈ£ update)
+		// ï¿½ï¿½È£È­ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ð¹ï¿½È£ update)
 
-		// Á¤»óÀûÀ¸·Î DB¿¡ ÀúÀåµÈ °æ¿ì ÀÌ¸ÞÀÏ·Î ·£´ý ºñ¹Ð¹øÈ£ Àü¼Û
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½
 		emailService.sendMail(new EmailDTO(inputEmail, randomPassword));
 		
 		return randomPassword;
 	}
 	
 	/**
-	 * ÇÚ´ý ºñ¹Ð¹øÈ£ »ý¼º±â
+	 * ï¿½Ú´ï¿½ ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param length
 	 * @return
 	 */

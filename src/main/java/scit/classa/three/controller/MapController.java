@@ -21,4 +21,6 @@ public class MapController {
 	public String Main() {
 		return "main";
 	}
+	
+
 }
