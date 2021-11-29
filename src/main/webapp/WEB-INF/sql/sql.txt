@@ -11,7 +11,7 @@ CREATE TABLE user(
 create sequence rseq;
 
 CREATE TABLE review(	
-    rseq number 	not null 		primary key
+    rseq.nextval number 	not null 		primary key
 	,user_id 		varchar2(30)  	constraint user_id_fk references user(user_id) on delete cascade
 	,review_context varchar2(20)
 	,review_good 	number 			default 0
