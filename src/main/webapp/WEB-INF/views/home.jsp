@@ -11,6 +11,12 @@
 	
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./login.css">
+    <script type="text/javascript">
+    	function toJoinForm(){
+    		location.href = "/account/toJoinForm"
+    	}
+    
+    </script>
     <style type="text/css">
     	a {
   			text-decoration: none;
@@ -29,10 +35,15 @@
 		  justify-content: center;
 		  background: rgba(0, 0, 0, 0.1);
 		}
-		
+		.wrap form{
+			width : 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
 		.login {
 		  width: 30%;
-		  height: 600px;
+		  height: 720px;
 		  background: white;
 		  border-radius: 20px;
 		  display: flex;
@@ -45,8 +56,6 @@
 		  color: black;
 		  font-size: 2em;
 		}
-		
-		
 		.login_id {
 		  margin-top: 20px;
 		  width: 80%;
@@ -91,6 +100,8 @@
 		  margin-top: 50px;
 		  width: 80%;
 		  text-align: center;
+		  display: flex;
+		  justify-content: space-evenly;
 		}
 		.submit input {
 		  width: 40%;
@@ -123,6 +134,7 @@
 		            </div>
 		            <div class="submit">
 		                <input type="submit" value="Sign in">
+		                <input type="button" value="Sign up" onclick="toJoinForm();">
 		            </div>
 	            </form>
 	            
@@ -167,7 +179,7 @@
 		
 		<div class="logo">거리두기 여행</div>
 		<div class="buttons">
-       		<input type="submit" value="Book Keeper" class="btn btn1 btn-primary" onclick="">
+       		<input type="submit" value="Map" class="btn btn1 btn-primary" onclick="">
        		<input type="button" value="Log Out" class="btn btn2 btn-primary" onclick="logout(${sessionScope.loginBy });">
      	</div>
 	</div>

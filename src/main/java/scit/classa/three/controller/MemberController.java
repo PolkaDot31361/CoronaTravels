@@ -61,16 +61,14 @@ public class MemberController {
 	final String HOME_URL = "http://localhost:8888";
 	
 //	회원 가입창 이동
-	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/account/toJoinForm", method = RequestMethod.GET)
 	public String toJoinForm() {
-		System.out.println("작동1");
-		return "joinForm";
+		return "account/joinForm";
 	}
 	
 //	회원 가입
-	@RequestMapping(value="/join", method = RequestMethod.POST)
+	@RequestMapping(value="/account/join", method = RequestMethod.POST)
 	public String createAccount(AccountVO account) {
-		System.out.println("working2");
 		LOG.info("granted AccountVO accout :{}" + account);
 		return accountService.createAccount(account);
 	}

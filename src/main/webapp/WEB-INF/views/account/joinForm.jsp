@@ -54,60 +54,109 @@ function formCheck(){
 
 
 </script>
+<style type="text/css">
+	.wrap {
+		  width: 100%;
+		  height: 100vh;
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		  background: rgba(0, 0, 0, 0.1);
+		}
+	.wrap .join{
+		width: 30%;
+		height: 720px;
+		background: white;
+	  	border-radius: 20px;
+	  	display: flex;
+	 	justify-content: space-evenly;
+	 	align-items: center;
+	  	flex-direction: column;
+	}
+	.wrap .join h2{
+		color: black;
+		font-size: 2em;
+	}
+	.wrap .join form{
+		height: 480px;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items:center;
+	}
+	.wrap .join form div{
+		width: 80%;
+		display: flex;
+		align-items: center;
+	}
+	.wrap .join form div input[type="text"], input[type="password"]{
+		width: 100%;
+	  	height: 50px;
+		border-radius: 30px;
+		margin-top: 10px;
+		padding: 0px 20px;
+		border: 1px solid lightgray;
+		outline: none;
+	}
+	.wrap .join form .gender{
+		height: 50px;
+		display: flex;
+		justify-content: space-around;
+	}
+	.wrap .join form .gender .header{
+		font-weight: 600;
+	}
+	.wrap .join form .submit{
+		display: flex;
+		flex-direction: column;
+	}
+	.wrap .join form .submit input{
+		width: 40%;
+  		height: 50px;
+	  	border: 0;
+	  	outline: none;
+	  	border-radius: 10px;
+	  	background: linear-gradient(to left, rgb(145, 145, 145), rgb(46, 46, 46));
+	  	color: white;
+	  	font-size: 1.2em;
+	  	letter-spacing: 2px;
+	}
+</style>
 </head>
 <body>
-
-<form action="/join" method="post" onsubmit="return formCheck();">
-		<table>
-			<tr>
-				<th>아이디</th>
-				<td>
-					<input type="text" name="user_id" id="user_id">
-					<input type="button" id="idCheck" value="중복검사">
-				</td>
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td>
-					<input type="password" name="user_pwd" id="user_pwd">
-				</td>
-			</tr>
-			<tr>
-				<th>이름</th>
-				<td>
-					<input type="text" name="user_name" id="user_name">
-				</td>
-			</tr>
-			<tr>
-				<th>이메일</th>
-				<td>
-					<input type="text" name="user_email" id="user_email">
-				</td>
-			</tr>
-			<tr>
-				<th>성별</th>			
-				<td>
-					<label>남성</label>
-					<input type="radio" id="user_gender" name="user_gender" value="m">
-					<label>여성</label>
-					<input type="radio" id="user_gender" name="user_gender" value="f">
-				</td>
-			</tr>
-			<tr>
-				<th>닉네임</th>
-				<td>
-					<input type="text" name="user_nickname" id="user_nickname">
-				</td>
-			</tr>
-			
-			<tr>
-				<th colspan="2">
-					<input type="submit" value="가입">
-				</th>
-			</tr>
-
-	</table>
-</form>
+<div class="wrap">
+	<div class="join">
+		<h2>Sign Up</h2>
+		<form action="/account/join" method="post" onsubmit="return formCheck();">
+			<div class="user_id">
+				<input type="text" name="user_id" id="user_id" placeholder="ID">
+			</div>
+			<div class="password">
+				<input type="password" name="user_pwd" id="user_pwd" placeholder="Password">
+			</div>
+			<div class="name">
+				<input type="text" name="user_name" id="user_name" placeholder="Name">
+			</div>
+			<div class="e-mail">
+				<input type="text" name="user_email" id="user_email" placeholder="E-mail">
+			</div>
+			<div class="nickname">
+				<input type="text" name="user_nickname" id="user_nickname" placeholder="Nickname">
+			</div>
+			<div class="gender">
+				<span class="header">Gender</span>	
+				<label>Male</label>
+				<input type="radio" id="user_gender" name="user_gender" value="m">
+				<label>Female</label>
+				<input type="radio" id="user_gender" name="user_gender" value="f">
+			</div>
+			<div class="submit">
+				<input type="submit" value="Sign up">
+			</div>
+		</form>
+	</div>
+</div>
 
 
 
