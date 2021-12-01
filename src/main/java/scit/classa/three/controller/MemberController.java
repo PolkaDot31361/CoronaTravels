@@ -66,6 +66,15 @@ public class MemberController {
 		return "account/joinForm";
 	}
 	
+//	회원 아이디 중복 확인
+	@ResponseBody
+	@RequestMapping(value = "/account/idCheck", method = RequestMethod.GET)
+	public boolean idCheck(AccountVO account) {
+		System.out.println(account.getUser_id());
+		boolean flag = accountService.idCheck(account);
+		return flag;
+	}
+	
 //	회원 가입
 	@RequestMapping(value="/account/join", method = RequestMethod.POST)
 	public String createAccount(AccountVO account) {
@@ -73,6 +82,11 @@ public class MemberController {
 		return accountService.createAccount(account);
 	}
 	
+// 	Log in
+	@RequestMapping(value = "/account/login", method = RequestMethod.POST)
+	public String login(AccountVO account) {
+		return accountService.login(account);
+	}
 	
 	/**
 	 * kakao �α���

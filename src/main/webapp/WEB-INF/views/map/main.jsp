@@ -47,6 +47,11 @@
 		  font-size: 36px;
 		  margin-left: 50px;
 		}
+		.sidenav form{
+			display: flex;
+			flex-direction : column;
+			align-items: flex-start;
+		} 
 		@media screen and (max-height: 450px) {
 		  .sidenav {padding-top: 15px;}
 		  .sidenav a {font-size: 18px;}
@@ -66,6 +71,18 @@
 			width: 100%;
 			overflow: auto;
 		}
+		.reviewBtn{
+			width: 80%;
+		  	height: 50px;
+		  	border: 0;
+		  	outline: none;
+		  	border-radius: 10px;
+		  	background: linear-gradient(to left, rgb(145, 145, 145), rgb(46, 46, 46));
+		  	color: white;
+		  	font-size: 1.2em;
+		  	letter-spacing: 2px;
+		}
+		
 	</style>
 	<script>
 		function openNav() {
@@ -73,6 +90,9 @@
 		}
 		function closeNav() {
 		  document.getElementById("mySidenav").style.width = "0";
+		}
+		function addReview(place){
+			location.href("/review/addReivew?place=" + place);
 		}
 	</script>
 	</head>
@@ -88,10 +108,7 @@
 		  <div class="collapse navbar-collapse" id="navbarsExample03">
 		    <ul class="navbar-nav mr-auto">
 		      <li class="nav-item">
-		        <a class="nav-link" href="#">login</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="#">logout</a>
+		        <a class="nav-link" href="javascript:void(0)" onclick="logout(${sessionScope.loginBy });">logout</a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link" href="#">Inquiry</a>
@@ -128,6 +145,9 @@
 		
 		<!-- kakao map api -->
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2090152ede9a9b2a0147836b9f6e01eb&libraries=services"></script>
+		
+		<!-- Oauth -->
+		<script src="/resources/js/Oauth.js"></script>
 		
 		<!-- 지도 생성 관련 javascript -->
 		<script>
@@ -196,12 +216,10 @@
 				        position: new kakao.maps.LatLng(place.y, place.x) 
 				    });
 					
-				    var infoContent = '<div style="padding:5px;font-size:12px;">'
-				    	infoContent += place.place_name + "<br>"
+				    var infoContent = '<div style="padding:5px;font-size:12px;" class="infoWindow">'
 				    	infoContent += "<a href=" + place.place_url + " target='_blank'>"
-				    	infoContent += place.place_url 
+				    	infoContent += place.place_name
 				    	infoContent += "</a><br>"
-				    	infoContent += "<input type='button' value='Show Review' class='btn reviewBtn'>"
 				    	infoContent += '</div>'
 				    	
 				    // 마커에 클릭이벤트를 등록합니다

@@ -32,27 +32,18 @@ public class KakaoService {
 		
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 
-		/**
-		 * POST ¿äÃ» : setDoOutput À» fasle -> true
-		 */
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		
-		/**
-		 * POST ¿äÃ»¿¡ ÇÊ¿ä·Î ¿ä±¸ÇÏ´Â ÆÄ¶ó¹ÌÅÍ ½ºÆ®¸²À» ÅëÇØ Àü¼Û
-		 */
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 		StringBuffer sb = new StringBuffer();
 		sb.append("grant_type=authorization_code");
-        sb.append("&client_id=" + CLIENT_ID);  //º»ÀÎÀÌ ¹ß±Þ¹ÞÀº key
-        sb.append("&redirect_uri=" + HOME_URL + "/login/oauth_kakao");     // º»ÀÎÀÌ ¼³Á¤ÇØ ³õÀº °æ·Î
+        sb.append("&client_id=" + CLIENT_ID);  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß±Þ¹ï¿½ï¿½ï¿½ key
+        sb.append("&redirect_uri=" + HOME_URL + "/login/oauth_kakao");     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         sb.append("&code=" + code);
         bw.write(sb.toString());
         bw.flush();
         
-        /**
-         * ¿äÃ»À» ÅëÇØ ¾òÀº JSONÅ¸ÀÔÀÇ Response ¸Þ¼¼Áö ÀÐ¾î¿À±â
-         */
         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String line = "";
         String result = "";
@@ -61,9 +52,6 @@ public class KakaoService {
             result += line;
         }
         
-        /**
-         * Gson ¶óÀÌºê·¯¸®¿¡ Æ÷ÇÔµÈ Å¬·¡½º·Î JSONÆÄ½Ì °´Ã¼ »ý¼º
-         */
         JsonParser parser = new JsonParser();
         JsonElement element = parser.parse(result);
         
@@ -76,26 +64,17 @@ public class KakaoService {
 		return accessToken;
 	}
 	
-	/**
-	 * kakao »ç¿ëÀÚ Á¤º¸ °¡Á®¿À±â
-	 * 
-	 * @param accessToken
-	 * @return
-	 * @throws IOException
-	 */
 	public HashMap<String, Object> getUserInfo(String accessToken){
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
 		final String reqURL = KAKAO_API_URL + "/v2/user/me";
 		
-		//access_tokenÀ» ÀÌ¿ëÇÏ¿© »ç¿ëÀÚ Á¤º¸ Á¶È¸
 	    try {
 	       URL url = new URL(reqURL);
 	       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 	       conn.setRequestMethod("GET");
-	       conn.setRequestProperty("Authorization", "Bearer " + accessToken); //Àü¼ÛÇÒ header ÀÛ¼º, access_tokenÀü¼Û
+	       conn.setRequestProperty("Authorization", "Bearer " + accessToken); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ header ï¿½Û¼ï¿½, access_tokenï¿½ï¿½ï¿½ï¿½
 
-	       //¿äÃ»À» ÅëÇØ ¾òÀº JSONÅ¸ÀÔÀÇ Response ¸Þ¼¼Áö ÀÐ¾î¿À±â
 	       BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
 	       String line = "";
 	       String result = "";
@@ -104,7 +83,6 @@ public class KakaoService {
 	           result += line;
 	       }
 	       
-	       //Gson ¶óÀÌºê·¯¸®·Î JSONÆÄ½Ì
 	       JsonParser parser = new JsonParser();
 	       JsonElement element = parser.parse(result);
 

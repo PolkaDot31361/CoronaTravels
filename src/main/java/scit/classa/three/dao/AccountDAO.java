@@ -24,6 +24,18 @@ public class AccountDAO {
 		}
 		return cnt;
 	}
+
+//	회원 ID 중복 검사
+	public AccountVO idCheck(AccountVO account) {
+		AccountVO result = null;
+		try {
+			AccountMapper mapper = session.getMapper(AccountMapper.class);
+			result = mapper.idCheck(account);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	
 }

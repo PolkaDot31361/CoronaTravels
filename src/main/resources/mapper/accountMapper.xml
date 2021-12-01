@@ -7,7 +7,7 @@
 	<insert id="createAccount" parameterType="account">
 	
 		insert into
-		  Travel_user(
+		  users(
 		      user_id     
 			,user_pwd    
 			,user_name   
@@ -24,5 +24,21 @@
 		)
 	
 	</insert>
-
+	
+	<select id="idCheck" parameterType="account" resultType="account">
+		select 
+			user_id
+			,user_pwd
+			,user_email
+			,user_nickname 
+		from 
+			users
+		where
+			user_id = #{user_id}
+		<if test="user_email != null">
+		and
+			user_email = #{user_email}
+		</if>
+	</select>
+	
 </mapper>

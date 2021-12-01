@@ -6,53 +6,103 @@
 <meta charset="UTF-8">
 <title>[ 회원가입 ]</title>
 
-<script type="text/javascript" src="/resources/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery-3.4.1.js"></script>
 <script type="text/javascript">
-function formCheck(){
-	
 
-	var user_id = document.getElementById("user_id").value;
-	var user_pwd = document.getElementById("user_pwd").value;
-	var user_name = document.getElementById("user_name").value;
-	var user_gender = document.getElementsByName("user_gender");
-
-	if(user_id == ""){
-		alert("아이디를 입력해주세요");
-		return false;
-	}else if(user_id.length < 5 || user_id.length > 10){
-		alert("아이디는 5~10글자로 입력해 주세요");
-		return false;
-	}
+	var idCheck = false;
 	
-	if(user_pwd == ""){
-		alert("비밀번호를 입력해주세요");
-		return false;
-	}else if(user_pwd.length < 4 || user_pwd.length > 8){
-		alert("비밀번호는 4~8글자로 입력해 주세요");
-		return false;
-	}
+	function formCheck(){
+		
 	
-	if(user_name == ""){
-		alert("이름을 입력해주세요");
-		return false;
-	}
+		var user_id = document.getElementById("user_id").value;
+		var user_pwd = document.getElementById("user_pwd").value;
+		var pwCheck = $("#pwCheck").val();
+		var user_name = document.getElementById("user_name").value;
+		var user_gender = document.getElementsByName("user_gender");
 	
-	var cnt = 0;
-	for(var i=0; i<user_gender.length; i++){
-		if(user_gender[i].checked == true){
-			cnt++;
+		if(user_id == ""){
+			alert("아이디를 입력해주세요");
+			return false;
+		}else if(user_id.length < 5 || user_id.length > 10){
+			alert("아이디는 5~10글자로 입력해 주세요");
+			return false;
 		}
+		
+		if(user_pwd == ""){
+			alert("비밀번호를 입력해주세요");
+			return false;
+		}else if(user_pwd.length < 4 || user_pwd.length > 8){
+			alert("비밀번호는 4~8글자로 입력해 주세요");
+			return false;
+		}
+			
+		if(pwCheck != user_pwd){
+			alert("비밀번호가 일치하지 않습니다.");
+			return false;
+		}
+		
+		if(user_name == ""){
+			alert("이름을 입력해주세요");
+			return false;
+		}
+		
+		var cnt = 0;
+		for(var i=0; i<user_gender.length; i++){
+			if(user_gender[i].checked == true){
+				cnt++;
+			}
+		}
+		
+		if(cnt == 0){
+			alert("성별을 선택해 주세요");
+			return false;
+		}
+		if(!idCheck){
+			alert("ID를 변경해 주세요")
+			return false;
+		}
+		
+		return true;
 	}
 	
-	if(cnt == 0){
-		alert("성별을 선택해 주세요");
-		return false;
-	}
-	return true;
-}
-
-
-
+	$(function(){
+		
+		
+		$("#user_id").on("focusout", function(){
+			var user_id = $("#user_id").val();
+			
+			if (user_id = ''){
+				alert("ID를 입력해 주세요");
+				return;
+			}
+			
+			$.ajax({
+				url: "/account/idCheck"
+				,type :"get"
+				,data :{
+					user_id : user_id
+				}
+				,success(resp){
+					if(resp){
+						var check = confirm("해당 아이디는 사용이 가능합니다. 사용하시겠습니까?")
+						if(check){
+							idCheck = true;
+						}else{
+							idCheck = false;
+						}
+					}else{
+						idCheck = false;
+						alert("해당 아이디는 사용 불가능 합니다.");
+					}
+				}
+				,error(e){
+					console.log(e);
+				}
+			});
+		});
+	});
+	
+	
 </script>
 <style type="text/css">
 	.wrap {
@@ -130,10 +180,13 @@ function formCheck(){
 		<h2>Sign Up</h2>
 		<form action="/account/join" method="post" onsubmit="return formCheck();">
 			<div class="user_id">
-				<input type="text" name="user_id" id="user_id" placeholder="ID">
+				<input type="text" name="user_id" id="user_id" placeholder="ID" autocomplete="off">
 			</div>
 			<div class="password">
 				<input type="password" name="user_pwd" id="user_pwd" placeholder="Password">
+			</div>
+			<div class="password">
+				<input type="password" id="pwCheck" placeholder="Confirm">
 			</div>
 			<div class="name">
 				<input type="text" name="user_name" id="user_name" placeholder="Name">
@@ -147,9 +200,9 @@ function formCheck(){
 			<div class="gender">
 				<span class="header">Gender</span>	
 				<label>Male</label>
-				<input type="radio" id="user_gender" name="user_gender" value="m">
+				<input type="radio" name="user_gender" value="m">
 				<label>Female</label>
-				<input type="radio" id="user_gender" name="user_gender" value="f">
+				<input type="radio" name="user_gender" value="f">
 			</div>
 			<div class="submit">
 				<input type="submit" value="Sign up">

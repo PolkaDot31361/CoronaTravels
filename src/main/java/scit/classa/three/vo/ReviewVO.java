@@ -6,6 +6,7 @@ import lombok.Data;
 public class ReviewVO {
 	private int rseq;
 	private String user_id;
+	private String review_item;
 	private String review_context;
 	private int review_good;
 	private int reveiw_bad;

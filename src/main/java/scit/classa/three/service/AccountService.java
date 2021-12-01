@@ -2,6 +2,8 @@ package scit.classa.three.service;
 
 import java.security.SecureRandom;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class AccountService {
 	@Autowired
 	private EmailServiceImpl emailService;
 	
+	@Autowired
+	HttpSession session;
+	
 	//회원 가입
 		public String createAccount(AccountVO account) {
 			String path = "";
@@ -41,24 +46,17 @@ public class AccountService {
 	 * @return
 	 */
 	public String resetPassword(String inputEmail) {
-		// �Է��� �̸����� DB�� �ִ��� Ȯ��
 		
-		// ���� ��� ��й�ȣ �ڴ� ����
 		String randomPassword = generatePassword(10);
 		
-		// ��й�ȣ ��ȣȭ
 		String encodedRandomPassword = passwordEncoder.encode(randomPassword);
 		
-		// ��ȣȭ�� ��й�ȣ�� DB�� ����(��й�ȣ update)
-
-		// ���������� DB�� ����� ��� �̸��Ϸ� ���� ��й�ȣ ����
 		emailService.sendMail(new EmailDTO(inputEmail, randomPassword));
 		
 		return randomPassword;
 	}
 	
 	/**
-	 * �ڴ� ��й�ȣ ������
 	 * @param length
 	 * @return
 	 */
@@ -73,4 +71,34 @@ public class AccountService {
         
         return new String(returnValue);
     }
+	
+	
+//	ID 중복 검사
+	public boolean idCheck(AccountVO account) {
+		boolean flag = false;
+		if(dao.idCheck(account) == null) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	public String login(AccountVO account) {
+		String path = "";
+		
+		AccountVO result = dao.idCheck(account);
+		
+		if(result == null) {
+			path = "redirect:/";
+		}else {
+			if(account.getUser_pwd().equals(result.getUser_pwd())) {
+				path = "redirect:/";
+				session.setAttribute("user_id", result.getUser_id());
+				session.setAttribute("user_name", result.getUser_nickname());
+				session.setAttribute("user_email", result.getUser_email());
+			}else {
+				path = "redirect:/";
+			}
+		}
+		return path;
+	}
 }

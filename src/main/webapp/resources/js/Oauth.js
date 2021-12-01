@@ -67,6 +67,7 @@ function logout(loginBy) {
 			accessLogout();
 			break;
 		default:
+			accessLogout();
 			console.log("일반 로그아웃");
 	}
 }

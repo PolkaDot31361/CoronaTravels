@@ -11,11 +11,29 @@
 	
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./login.css">
+    <!-- Jquery -->
+	<script src="/resources/js/jquery-3.4.1.js"></script>
     <script type="text/javascript">
     	function toJoinForm(){
     		location.href = "/account/toJoinForm"
     	}
-    
+    	function toMain(){
+    		location.href = "/map/toMain";
+    	}
+    	function formCheck(){
+    		var user_id = $("#user_id").val();
+    		var user_pwd = $("#user_pwd").val();
+    		
+    		if (user_id == ""){
+    			alert("Enter ID");
+    			return false;
+    		}
+    		if (user_pwd ==""){
+    			alert("Enter Password");
+    			return false;
+    		}
+    		return true;
+    	}
     </script>
     <style type="text/css">
     	a {
@@ -75,7 +93,6 @@
 		  margin-top: 20px;
 		  width: 80%;
 		}
-		
 		.login_pw input {
 		  width: 100%;
 		  height: 50px;
@@ -85,7 +102,6 @@
 		  border: 1px solid lightgray;
 		  outline: none;
 		}
-		
 		.login_etc {
 		  padding: 10px;
 		  width: 80%;
@@ -95,7 +111,6 @@
 		  align-items: center;
 		  font-weight: bold;
 		}
-		
 		.submit {
 		  margin-top: 50px;
 		  width: 80%;
@@ -127,10 +142,10 @@
 	            <h2>Log-in</h2>
 	            <form action="/account/login" method="post" onsubmit="return formCheck();">
 		            <div class="login_id">
-		                <input type="text" name="" id="" placeholder="Username">
+		                <input type="text" name="user_id" id="user_id" placeholder="User ID" autocomplete="off">
 		            </div>
 		            <div class="login_pw">
-		                <input type="password" name="" id="" placeholder="Password">
+		                <input type="password" name="user_pwd" id="user_pwd" placeholder="Password">
 		            </div>
 		            <div class="submit">
 		                <input type="submit" value="Sign in">
@@ -171,28 +186,23 @@
 
 	</c:when>
 	<c:otherwise>
-	<div class="container">
-		<div>
-			<h1>안녕하세요!! </h1><p>${sessionScope.user_name }</p>
-		 	<h4>이메일 : </h4><p>${sessionScope.user_email }</p>
+	<div class="wrap">
+		<div class="login">
+			<h1>안녕하세요!!</h1> 
+			<h1>${sessionScope.user_name } 님!</h1>
+			
+			<h2>거리두기 여행</h2>
+			<div class="submit">
+	       		<input type="submit" value="Map" onclick="toMain();">
+	       		<input type="button" value="Log Out" onclick="logout(${sessionScope.loginBy });">
+	     	</div>
 		</div>
-		
-		<div class="logo">거리두기 여행</div>
-		<div class="buttons">
-       		<input type="submit" value="Map" class="btn btn1 btn-primary" onclick="">
-       		<input type="button" value="Log Out" class="btn btn2 btn-primary" onclick="logout(${sessionScope.loginBy });">
-     	</div>
 	</div>
 	</c:otherwise>
 	</c:choose>
-	
-	<a href="map/toMap">지도 바로가기</a>
-	<br>
 	<a href="map/toMain">메인페이지</a>
-
 	<!-- SCRIPT -->
-	<!-- Jquery -->
-	<script src="/resources/js/jquery-3.4.1.js"></script>
+	
 	
 	<!-- Kakao login API -->
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
